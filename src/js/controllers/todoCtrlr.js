@@ -1,8 +1,6 @@
-"use strict";
+var angular = require("angular");
 
-angular.module("app", []);
-
-angular.module("app").controller("TodoCtrl", function($scope, TodoSvc) {
+var todoCtrlr = angular.module("app").controller("TodoCtrlr", function($scope, TodoSvc) {
 
   $scope.refresh = function() {
     TodoSvc.fetch()
@@ -29,16 +27,4 @@ angular.module("app").controller("TodoCtrl", function($scope, TodoSvc) {
   $scope.refresh();
 });
 
-angular.module("app").service("TodoSvc", function($http) {
-  this.fetch = function() {
-    return $http.get("/api/todos");
-  };
-
-  this.add = function(todo) {
-    return $http.post("/api/todos", todo);
-  };
-
-  this.delete = function(todo) {
-    return $http.delete("/api/todos/" + todo._id);
-  };
-});
+module.exports = todoCtrlr;
