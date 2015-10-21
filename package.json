@@ -4,11 +4,13 @@
   "description": "MEAN experiment + d3.js",
   "repository": "",
   "license": "",
-  "author": "",
+  "author": "rorysedgwick",
   "scripts": {
-    "lint": "eslint app.js",
-    "start": "npm run build & nodemon api/server.js",
-    "build": "npm run lint & babel src -w -d public"
+    "lint": "eslint **/*.js",
+    "start": "npm run build:watch & nodemon api/server.js",
+    "build": "npm run lint & npm run browserify",
+    "build:watch": "watchify src/js/app.js -t babelify -o public/js/app.js",
+    "browserify": "browserify src/js/app.js -t babelify -o public/js/app.js"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
@@ -21,6 +23,7 @@
   "devDependencies": {
     "babel": "^5.8.21",
     "babel-eslint": "^4.0.10",
+    "babelify": "^6.4.0",
     "eslint": "^1.1.0",
     "nodemon": "^1.4.1"
   }
