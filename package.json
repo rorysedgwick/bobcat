@@ -1,0 +1,27 @@
+{
+  "name": "bobcat",
+  "version": "0.0.0",
+  "description": "MEAN experiment + d3.js",
+  "repository": "",
+  "license": "",
+  "author": "",
+  "scripts": {
+    "lint": "eslint app.js",
+    "start": "npm run build & nodemon api/server.js",
+    "build": "npm run lint & babel src -w -d public"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "mongoose": "^4.1.12",
+    "browserify": "^11.2.0",
+    "watchify": "^3.4.0"
+  },
+  "devDependencies": {
+    "babel": "^5.8.21",
+    "babel-eslint": "^4.0.10",
+    "eslint": "^1.1.0",
+    "nodemon": "^1.4.1"
+  }
+}

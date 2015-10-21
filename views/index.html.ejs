@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="UTF-8">
+    <title>simple-mean</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.js"></script>
+    <script src="/scripts/app.js"></script>
+  </head>
+
+  <body>
+    <div ng-controller="TodoCtrl">
+      <h1>Todos</h1>
+      <ul>
+        <li ng-repeat="todo in todos">
+          {{todo.title}}
+          <button ng-click="deleteTodo(todo)">Delete</button>
+        </li>
+      </ul>
+      <form ng-submit='addTodo()'>
+        <input ng-model='newTodo.title'>
+        <input type='submit' value='Add'>
+      </form>
+    </div>
+
+  </body>
+</html>
