@@ -2,14 +2,15 @@
   "name": "bobcat",
   "version": "0.0.0",
   "description": "MEAN experiment + d3.js",
-  "repository": "",
+  "repository": "https://github.com/rorysedgwick/bobcat",
   "license": "",
   "author": "rorysedgwick",
   "scripts": {
+    "test": "jasmine",
     "lint": "eslint **/*.js",
-    "start": "npm run build:watch & nodemon api/server.js",
+    "start": "npm run build-watch & nodemon api/server.js",
     "build": "npm run lint & npm run browserify",
-    "build:watch": "watchify src/js/app.js -t babelify -o public/js/app.js",
+    "build-watch": "watchify src/js/app.js -t babelify -o public/js/app.js",
     "browserify": "browserify src/js/app.js -t babelify -o public/js/app.js"
   },
   "dependencies": {
@@ -25,6 +26,8 @@
     "babel-eslint": "^4.0.10",
     "babelify": "^6.4.0",
     "eslint": "^1.1.0",
+    "karma": "^0.13.11",
+    "karma-chrome-launcher": "^0.2.1",
     "nodemon": "^1.4.1"
   }
 }
