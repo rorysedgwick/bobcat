@@ -20,4 +20,8 @@ router.delete("/api/todos/:todo_id", function(req, res, next) {
   handler.removeTodo(req, res, next);
 });
 
+router.post("/api/bikeDockData", function(req, res, next) {
+  handler.writeTFLData(req, res, next);
+});
+
 module.exports = router;
