@@ -28943,6 +28943,18 @@ var todoCtrlr = angular.module("app").controller("TodoCtrlr", function ($scope, 
     });
   };
 
+  $scope.fetchTFLData = function () {
+    TodoSvc.fetchTFLData().then(function (data) {
+      TodoSvc.writeTFLData(data);
+    });
+  };
+
+  $scope.writeTFLData = function (data) {
+    TodoSvc.writeTFLData(data).then(function () {
+      console.log("data posted to backend");
+    });
+  };
+
   $scope.refresh();
 });
 
@@ -28964,6 +28976,15 @@ var todoSvc = angular.module("app").service("TodoSvc", function ($http) {
 
   this["delete"] = function (todo) {
     return $http["delete"]("/api/todos/" + todo._id);
+  };
+
+  this.fetchTFLData = function () {
+    return $http.get("https://tfl.gov.uk/tfl/syndication/feeds/cycle-hire/livecyclehireupdates.xml");
+  };
+
+  this.writeTFLData = function (data) {
+    console.log("writing in SVC: ", data);
+    return $http.post("/api/bikeDockData", data);
   };
 });
 

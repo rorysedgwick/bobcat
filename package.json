@@ -21,7 +21,8 @@
     "mongodb": "^2.0.46",
     "mongodb-uri": "^0.9.7",
     "mongoose": "^4.1.12",
-    "watchify": "^3.4.0"
+    "watchify": "^3.4.0",
+    "xml2js": "^0.4.13"
   },
   "devDependencies": {
     "babel": "^5.8.21",

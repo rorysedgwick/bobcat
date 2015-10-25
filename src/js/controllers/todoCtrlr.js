@@ -22,7 +22,21 @@ var todoCtrlr = angular.module("app").controller("TodoCtrlr", function($scope, T
     .then(function() {
       $scope.refresh();
     });
-  }
+  };
+
+  $scope.fetchTFLData = function() {
+    TodoSvc.fetchTFLData()
+    .then(function(data) {
+      TodoSvc.writeTFLData(data);
+    });
+  };
+
+  $scope.writeTFLData = function(data) {
+    TodoSvc.writeTFLData(data)
+    .then(function() {
+      console.log("data posted to backend");
+    });
+  };
 
   $scope.refresh();
 });
