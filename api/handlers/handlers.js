@@ -1,11 +1,14 @@
 "use strict";
 
 var mongoose = require("mongoose");
+var uriUtil = require('mongodb-uri');
 var config = require("../config.js");
-var Schema = mongoose.Schema;
 var Todo = require("../model/schema").Todo;
 
-mongoose.connect(config.db.url);
+var mongodbUri = "mongodb://" + config.db.user + ":" + config.db.password + "@ds041484.mongolab.com:41484/bobcat";
+var mongooseUri = uriUtil.formatMongoose(mongodbUri);
+
+mongoose.connect(mongooseUri);
 var db = mongoose.connection;
 
 db.once("open", function() {
