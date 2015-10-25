@@ -6,7 +6,7 @@
   "license": "",
   "author": "rorysedgwick",
   "scripts": {
-    "test": "jasmine",
+    "test": "mocha test/**/**",
     "lint": "eslint **/*.js",
     "start": "npm run build-watch & nodemon api/server.js",
     "build": "npm run lint & npm run browserify",
@@ -28,6 +28,8 @@
     "eslint": "^1.1.0",
     "karma": "^0.13.11",
     "karma-chrome-launcher": "^0.2.1",
-    "nodemon": "^1.4.1"
+    "node-mocks-http": "^1.4.4",
+    "nodemon": "^1.4.1",
+    "shot": "^1.7.0"
   }
 }

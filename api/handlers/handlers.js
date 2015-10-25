@@ -15,6 +15,7 @@ db.once("open", function() {
 var handler = {
 
   home: function(req, res) {
+    console.log("home handler called");
     res.render("index.html.ejs");
   },
 

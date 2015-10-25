@@ -5,8 +5,8 @@ MEAN stack plus d3.js to visualize flow of rental bikes across London
 
 #### To do:
 [ ] Detailed readme
-[ ] Modularise
-[ ] Set up test framework
+[x] Modularise
+[x] Set up test framework
 [ ] Write tests for existing code
 [ ] Set up cloud database (mongolabs?)
   [ ] Finalise data structure
