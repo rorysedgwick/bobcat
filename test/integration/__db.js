@@ -1,7 +1,8 @@
-"use strict";
+// "use strict";
 
-var mongoose = require("mongoose");
-var config = require("../../api/config.js");
+// var assert = require("assert");
+// var mongoose = require("mongoose");
+// var config = require("../../api/config.js");
 
 // describe("a basic database test", function() {
 
