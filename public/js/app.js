@@ -28912,62 +28912,87 @@ module.exports = angular;
 
 var angular = require("angular");
 
-angular.module("app", []);
+angular.module("app", ["nemLogging", "leaflet-directive"]);
 
-require("./controllers/todoCtrlr.js");
-require("./services/todoSvc.js");
+require("./services/bikeDockSvc.js");
+require("./controllers/mapCtrlr.js");
 
-},{"./controllers/todoCtrlr.js":4,"./services/todoSvc.js":5,"angular":2}],4:[function(require,module,exports){
+// require("./services/todoSvc.js");
+// require("./controllers/todoCtrlr.js");
+
+},{"./controllers/mapCtrlr.js":4,"./services/bikeDockSvc.js":5,"angular":2}],4:[function(require,module,exports){
 "use strict";
 
 var angular = require("angular");
 
-var todoCtrlr = angular.module("app").controller("TodoCtrlr", function ($scope, TodoSvc) {
+var mapCtrlr = angular.module("app").controller("MapCtrlr", function ($scope, BikeDockSvc) {
 
   $scope.refresh = function () {
-    TodoSvc.fetch().then(function (todos) {
-      $scope.todos = todos.data;
-    });
-  };
-
-  $scope.addTodo = function () {
-    TodoSvc.add($scope.newTodo).then(function () {
-      $scope.newTodo = {};
-      $scope.refresh();
-    });
-  };
-
-  $scope.deleteTodo = function (todo) {
-    TodoSvc["delete"](todo).then(function () {
-      $scope.refresh();
+    BikeDockSvc.fetch().then(function (bikeDockData) {
+      $scope.bikeDockData = bikeDockData.data;
     });
   };
 
   $scope.fetchTFLData = function () {
-    TodoSvc.fetchTFLData().then(function (data) {
+    BikeDockSvc.fetchTFLData().then(function (data) {
       TodoSvc.writeTFLData(data);
     });
   };
 
   $scope.writeTFLData = function (data) {
-    TodoSvc.writeTFLData(data).then(function () {
-      console.log("data posted to backend");
-    });
+    BikeDockSvc.writeTFLData(data).then(function () {});
   };
+
+  var bikePointMarker = {
+    //   lat: $scope.bikeDockData[0].lat,
+    //   lng: $scope.bikeDockData[0].lng,
+    //   title: $scope.bikeData[0].name + ": " + $scope.bikeDockData[0].available_bikes + "/" + $scope.bikeDockData[0].total_docks + "free.",
+    //   focus: true,
+    //   message: "There are currently " + $scope.bikeDockData[0].available_bikes + " available bikes at " + $scope.bikeDockData[0].name
+  };
+
+  var myMarker = {
+    lat: 51.5072,
+    lng: -0.150,
+    title: "Test marker",
+    focus: true,
+    message: "Check out how many bikes are at this location"
+  };
+
+  angular.extend($scope, {
+    defaults: {
+      // tile options: http://openmapsurfer.uni-hd.de/tiles/roads/x={x}&y={y}&z={z}
+      //               http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}
+      tileLayer: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
+    },
+    center: {
+      lat: 51.5072,
+      lng: -0.100,
+      zoom: 12
+    },
+    markers: {
+      myMarker: angular.copy(myMarker)
+    },
+    position: {
+      lat: 51,
+      lng: 0
+    },
+    events: {}
+  });
 
   $scope.refresh();
 });
 
-module.exports = todoCtrlr;
+module.exports = mapCtrlr;
 
 },{"angular":2}],5:[function(require,module,exports){
 "use strict";
 
 var angular = require("angular");
 
-var todoSvc = angular.module("app").service("TodoSvc", function ($http) {
+var bikeDockSvc = angular.module("app").service("BikeDockSvc", function ($http) {
   this.fetch = function () {
-    return $http.get("/api/todos");
+    return $http.get("/api/bikeDockData");
   };
 
   this.add = function (todo) {
@@ -28983,11 +29008,10 @@ var todoSvc = angular.module("app").service("TodoSvc", function ($http) {
   };
 
   this.writeTFLData = function (data) {
-    console.log("writing in SVC: ", data);
     return $http.post("/api/bikeDockData", data);
   };
 });
 
-module.exports = todoSvc;
+module.exports = bikeDockSvc;
 
 },{"angular":2}]},{},[3]);

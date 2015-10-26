@@ -1,27 +1,28 @@
-var angular = require("angular");
+// "use strict";
 
-var todoSvc = angular.module("app").service("TodoSvc", function($http) {
-  this.fetch = function() {
-    return $http.get("/api/todos");
-  };
+// var angular = require("angular");
 
-  this.add = function(todo) {
-    return $http.post("/api/todos", todo);
-  };
+// var todoSvc = angular.module("app").service("TodoSvc", function($http) {
+//   this.fetch = function() {
+//     return $http.get("/api/todos");
+//   };
 
-  this.delete = function(todo) {
-    return $http.delete("/api/todos/" + todo._id);
-  };
+//   this.add = function(todo) {
+//     return $http.post("/api/todos", todo);
+//   };
 
-  this.fetchTFLData = function() {
-    return $http.get("https://tfl.gov.uk/tfl/syndication/feeds/cycle-hire/livecyclehireupdates.xml");
-  };
+//   this.delete = function(todo) {
+//     return $http.delete("/api/todos/" + todo._id);
+//   };
 
-  this.writeTFLData = function(data) {
-    console.log("writing in SVC: ", data);
-    return $http.post("/api/bikeDockData", data);
-  };
+//   this.fetchTFLData = function() {
+//     return $http.get("https://tfl.gov.uk/tfl/syndication/feeds/cycle-hire/livecyclehireupdates.xml");
+//   };
 
-});
+//   this.writeTFLData = function(data) {
+//     return $http.post("/api/bikeDockData", data);
+//   };
 
-module.exports = todoSvc;
+// });
+
+// module.exports = todoSvc;

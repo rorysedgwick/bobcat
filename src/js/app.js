@@ -2,7 +2,12 @@
 
 var angular = require("angular");
 
-angular.module("app", []);
+angular.module("app", ["nemLogging", "leaflet-directive"]);
 
-require("./controllers/todoCtrlr.js");
-require("./services/todoSvc.js");
+require("./services/bikeDockSvc.js");
+require("./controllers/mapCtrlr.js");
+
+
+
+// require("./services/todoSvc.js");
+// require("./controllers/todoCtrlr.js");

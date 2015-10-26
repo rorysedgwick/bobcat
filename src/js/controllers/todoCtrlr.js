@@ -1,44 +1,46 @@
-var angular = require("angular");
+// "use strict";
 
-var todoCtrlr = angular.module("app").controller("TodoCtrlr", function($scope, TodoSvc) {
+// var angular = require("angular");
 
-  $scope.refresh = function() {
-    TodoSvc.fetch()
-    .then(function(todos) {
-      $scope.todos = todos.data;
-    });
-  };
+// var todoCtrlr = angular.module("app").controller("TodoCtrlr", function($scope, TodoSvc) {
 
-  $scope.addTodo = function() {
-    TodoSvc.add($scope.newTodo)
-    .then(function() {
-      $scope.newTodo = {};
-      $scope.refresh();
-    });
-  };
+//   $scope.refresh = function() {
+//     TodoSvc.fetch()
+//     .then(function(todos) {
+//       $scope.todos = todos.data;
+//     });
+//   };
 
-  $scope.deleteTodo = function(todo) {
-    TodoSvc.delete(todo)
-    .then(function() {
-      $scope.refresh();
-    });
-  };
+//   $scope.addTodo = function() {
+//     TodoSvc.add($scope.newTodo)
+//     .then(function() {
+//       $scope.newTodo = {};
+//       $scope.refresh();
+//     });
+//   };
 
-  $scope.fetchTFLData = function() {
-    TodoSvc.fetchTFLData()
-    .then(function(data) {
-      TodoSvc.writeTFLData(data);
-    });
-  };
+//   $scope.deleteTodo = function(todo) {
+//     TodoSvc.delete(todo)
+//     .then(function() {
+//       $scope.refresh();
+//     });
+//   };
 
-  $scope.writeTFLData = function(data) {
-    TodoSvc.writeTFLData(data)
-    .then(function() {
-      console.log("data posted to backend");
-    });
-  };
+//   $scope.fetchTFLData = function() {
+//     TodoSvc.fetchTFLData()
+//     .then(function(data) {
+//       TodoSvc.writeTFLData(data);
+//     });
+//   };
 
-  $scope.refresh();
-});
+//   $scope.writeTFLData = function(data) {
+//     TodoSvc.writeTFLData(data)
+//     .then(function() {
+//       console.log("data posted to backend");
+//     });
+//   };
 
-module.exports = todoCtrlr;
+//   $scope.refresh();
+// });
+
+// module.exports = todoCtrlr;
