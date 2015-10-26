@@ -28912,12 +28912,47 @@ module.exports = angular;
 
 var angular = require("angular");
 
-angular.module("app", []);
+angular.module("app", ["nemLogging", "leaflet-directive"]);
 
 require("./controllers/todoCtrlr.js");
+require("./controllers/MapCtrlr.js");
 require("./services/todoSvc.js");
 
-},{"./controllers/todoCtrlr.js":4,"./services/todoSvc.js":5,"angular":2}],4:[function(require,module,exports){
+},{"./controllers/MapCtrlr.js":4,"./controllers/todoCtrlr.js":5,"./services/todoSvc.js":6,"angular":2}],4:[function(require,module,exports){
+"use strict";
+
+var angular = require("angular");
+
+var MapCtrlr = angular.module("app").controller("MapCtrlr", ["$scope", function ($scope) {
+
+  var myMarker = {
+    lat: 51.5,
+    lng: 0,
+    focus: true,
+    message: "A marker"
+  };
+
+  angular.extend($scope, {
+    defaults: {
+      tileLayer: 'http://openmapsurfer.uni-hd.de/tiles/roads/x={x}&y={y}&z={z}'
+    },
+    center: {
+      lat: 51.5072,
+      lng: -0.100,
+      zoom: 12
+    },
+    markers: {
+      myMarker: angular.copy(myMarker)
+    },
+    position: {
+      lat: 51,
+      lng: 0
+    },
+    events: {}
+  });
+}]);
+
+},{"angular":2}],5:[function(require,module,exports){
 "use strict";
 
 var angular = require("angular");
@@ -28960,7 +28995,7 @@ var todoCtrlr = angular.module("app").controller("TodoCtrlr", function ($scope, 
 
 module.exports = todoCtrlr;
 
-},{"angular":2}],5:[function(require,module,exports){
+},{"angular":2}],6:[function(require,module,exports){
 "use strict";
 
 var angular = require("angular");
