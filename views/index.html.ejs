@@ -9,22 +9,9 @@
   </head>
 
   <body>
-<!--     <div ng-controller="TodoCtrlr">
-      <ul>
-        <li ng-repeat="todo in todos">
-          {{todo.title}}
-          <button ng-click="deleteTodo(todo)">Delete</button>
-        </li>
-      </ul>
-      <form ng-submit="addTodo()">
-        <input ng-model="newTodo.title">
-        <input type="submit" value="Add">
-      </form>
-      <button ng-click="fetchTFLData()">Fetch TFL data</button>
-    </div> -->
-
     <div ng-controller="MapCtrlr">
-      <leaflet defaults="defaults" markers="markers" lf-center="center" width="100%" height="600px"></leaflet>
+      <button ng-click="fetchTFLData()">Fetch tfl data</button>
+      <leaflet defaults="defaults" markers="markers" lf-center="center" width="100%" height="625px"></leaflet>
 
     </div>
 

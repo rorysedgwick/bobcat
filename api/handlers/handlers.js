@@ -23,30 +23,6 @@ var handler = {
     res.render("index.html.ejs");
   },
 
-  // getTodos: function(req, res, next) {
-  //   Todo.find()
-  //     .exec(function(err, todos) {
-  //       if (err) return next(err);
-  //       res.json(todos);
-  //     });
-  //   },
-
-  // createTodo: function(req, res, next) {
-  //   var todo = new Todo({title: req.body.title});
-  //   todo.save(function(err) {
-  //     if (err) return next(err);
-  //     res.sendStatus(201);
-  //     console.log("added " + todo.title);
-  //   });
-  // },
-
-  // removeTodo: function(req, res, next) {
-  //   Todo.remove({_id: req.params.todo_id}, function(err, todo) {
-  //     if (err) return next(err);
-  //     res.sendStatus(200);
-  //   });
-  // },
-
   getBikeDockData: function(req, res, next) {
     BikeDock.find().exec(function(err, bikeDockData) {
       if (err) return next(err);
@@ -57,29 +33,61 @@ var handler = {
   writeTFLData: function(req, res, next) {
     parseString(req.body.data, function(err, result) {
 
-      var i, len = result.stations.station.length;
-      for(i = 0; i < len; i += 1) {
+      BikeDock.find().exec(function(err, bikeDockData) {
+        console.log("searching database");
+        if (err) return next(err);
 
-        var dock = result.stations.station[i];
-        var bikeDock = new BikeDock({
-          id: parseInt(dock.id[0], 10),
-          name: dock.name[0],
-          lat: parseInt(dock.lat[0], 10),
-          lng: parseInt(dock.long[0], 10),
-          available_bikes: parseInt(dock.nbBikes[0], 10),
-          available_docks: parseInt(dock.nbEmptyDocks[0], 10),
-          total_docks: parseInt(dock.nbDocks[0], 10)
-        });
+        if (bikeDockData.length === 0) {
+          console.log("no data found");
 
-        bikeDock.save(function(err) {
-          if (err)  {
-            return next(err);
-          } else {
-            console.log("dock saved");
+          var i, len = result.stations.station.length;
+
+          for(i = 0; i < len; i += 1) {
+
+            var dock = result.stations.station[i];
+            var bikeDock = new BikeDock({
+              id: parseInt(dock.id[0], 10),
+              name: dock.name[0],
+              lat: parseFloat(dock.lat[0], 10),
+              lng: parseFloat(dock.long[0], 10),
+              available_bikes: parseInt(dock.nbBikes[0], 10),
+              available_docks: parseInt(dock.nbEmptyDocks[0], 10),
+              total_docks: parseInt(dock.nbDocks[0], 10)
+            });
+
+            bikeDock.save(function(err) {
+              if (err)  {
+                return next(err);
+              } else {
+                console.log("dock saved");
+              }
+            });
           }
-        });
+        } else if (bikeDockData.length > 0) {
+          // loop through data & match entry ids
+          // update 2 bike metrics & save entry
 
-      };
+          console.log("existing data, updating fields");
+
+          var i, len = result.stations.station.length;
+          for(i = 0; i < len; i += 1) {
+
+            var dock = result.stations.station[i];
+            console.log("dock i: ", dock);
+            BikeDock.update({ name: dock.name[0] },
+
+             { available_bikes: dock.nbBikes[0],
+               available_docks: dock.nbEmptyDocks[0]}, function(err) {
+
+                if (err) {
+                  return next(err);
+                } else {
+                  console.log("dock updated");
+                }
+              });
+          }
+        }
+      });
     });
   }
 }
