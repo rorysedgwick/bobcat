@@ -1,10 +1,12 @@
 "use strict";
 
 var angular = require("angular");
+var L = require("leaflet.markercluster");
 
 var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, BikeDockSvc) {
 
   $scope.refresh = function() {
+    console.log("refreshing data from db");
     BikeDockSvc.fetch()
     .then(function(bikeDockData) {
       $scope.bikeDockData = bikeDockData.data;
@@ -22,10 +24,13 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, Bik
   $scope.writeTFLData = function(data) {
     BikeDockSvc.writeTFLData(data)
     .then(function() {
+      console.log("database updated in mapCtrlr");
     });
   };
 
   $scope.createMarkers = function(data) {
+
+    // $scope.markers = new L.MarkerClusterGroup();
 
     var i, len = data.length, bikePointMarkers = [];
 
@@ -69,6 +74,7 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, Bik
   });
 
   $scope.refresh();
+  setInterval($scope.refresh, 30000);
 
 });
 
