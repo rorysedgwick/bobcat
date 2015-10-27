@@ -7,6 +7,7 @@
   "author": "rorysedgwick",
   "scripts": {
     "test": "mocha test/**/**",
+    "watch-test": "mocha -w test/**/*.js",
     "lint": "eslint **/*.js",
     "start": "npm run build-watch & nodemon api/server.js",
     "build": "npm run lint & npm run browserify",
@@ -21,6 +22,7 @@
     "ejs": "^2.3.4",
     "express": "^4.13.3",
     "leaflet": "^0.7.5",
+    "leaflet.markercluster": "^0.4.0",
     "mongodb": "^2.0.46",
     "mongodb-uri": "^0.9.7",
     "mongoose": "^4.1.12",

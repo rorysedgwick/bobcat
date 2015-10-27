@@ -3,19 +3,9 @@
 var mongoose = require("mongoose");
 var uriUtil = require('mongodb-uri');
 var parseString = require("xml2js").parseString;
-var config = require("../config.js");
+var db = require("../model/db.js");
 var Todo = require("../model/schema").Todo;
 var BikeDock = require("../model/schema").BikeDock;
-
-var mongodbUri = "mongodb://" + config.db.user + ":" + config.db.password + "@ds041484.mongolab.com:41484/bobcat";
-var mongooseUri = uriUtil.formatMongoose(mongodbUri);
-
-mongoose.connect(mongooseUri);
-var db = mongoose.connection;
-
-db.once("open", function() {
-  console.log("database connected");
-});
 
 var handler = {
 
@@ -59,13 +49,11 @@ var handler = {
               if (err)  {
                 return next(err);
               } else {
-                console.log("dock saved");
+                console.log("new dock saved");
               }
             });
           }
         } else if (bikeDockData.length > 0) {
-          // loop through data & match entry ids
-          // update 2 bike metrics & save entry
 
           console.log("existing data, updating fields");
 
@@ -73,7 +61,6 @@ var handler = {
           for(i = 0; i < len; i += 1) {
 
             var dock = result.stations.station[i];
-            console.log("dock i: ", dock);
             BikeDock.update({ name: dock.name[0] },
 
              { available_bikes: dock.nbBikes[0],
@@ -89,6 +76,7 @@ var handler = {
         }
       });
     });
+    res.sendStatus(201);
   }
 }
 
