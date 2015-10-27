@@ -8,13 +8,14 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, Bik
     BikeDockSvc.fetch()
     .then(function(bikeDockData) {
       $scope.bikeDockData = bikeDockData.data;
+      $scope.createMarkers(bikeDockData.data);
     });
   };
 
   $scope.fetchTFLData = function() {
     BikeDockSvc.fetchTFLData()
     .then(function(data) {
-      TodoSvc.writeTFLData(data);
+      BikeDockSvc.writeTFLData(data);
     });
   };
 
@@ -24,20 +25,24 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, Bik
     });
   };
 
-  var bikePointMarker = {
-  //   lat: $scope.bikeDockData[0].lat,
-  //   lng: $scope.bikeDockData[0].lng,
-  //   title: $scope.bikeData[0].name + ": " + $scope.bikeDockData[0].available_bikes + "/" + $scope.bikeDockData[0].total_docks + "free.",
-  //   focus: true,
-  //   message: "There are currently " + $scope.bikeDockData[0].available_bikes + " available bikes at " + $scope.bikeDockData[0].name
-  }
+  $scope.createMarkers = function(data) {
 
-  var myMarker = {
-    lat: 51.5072,
-    lng: -0.150,
-    title: "Test marker",
-    focus: true,
-    message: "Check out how many bikes are at this location"
+    var i, len = data.length, bikePointMarkers = [];
+
+    for(i = 0; i < len; i += 1) {
+
+      var bikePointMarker = {
+        lat: data[i].lat,
+        lng: data[i].lng,
+        focus: false,
+        message: "There are currently " + data[i].available_bikes + " available bikes at " + data[i].name
+        // title: data[i].name + ": " + data[i].available_bikes + "/" + data[x].total_docks + "free.",
+      }
+
+      bikePointMarkers.push(bikePointMarker);
+    }
+
+    $scope.markers = bikePointMarkers;
   }
 
   angular.extend($scope, {
@@ -45,6 +50,7 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, Bik
       // tile options: http://openmapsurfer.uni-hd.de/tiles/roads/x={x}&y={y}&z={z}
       //               http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}
       tileLayer: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+      iconSize: [1, 1],
     },
     center: {
       lat: 51.5072,
@@ -52,12 +58,13 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, Bik
       zoom: 12
     },
     markers: {
-      myMarker: angular.copy(myMarker)
+      // myMarker: angular.copy(myMarker)
     },
-    position: {
-      lat: 51,
-      lng: 0
-    },
+    markerZoomAnimation: true,
+    // position: {
+    //   lat: 51,
+    //   lng: 0
+    // },
     events: {}
   });
 
