@@ -19,8 +19,6 @@ mongoose.connect(mongooseUri);
 
 var db = mongoose.connection;
 
-console.log("dbConnection: ", mongooseUri);
-
 db.once("open", function() {
   console.log("database connected");
 });

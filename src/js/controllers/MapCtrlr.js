@@ -1,7 +1,8 @@
 "use strict";
 
 var angular = require("angular");
-var L = require("leaflet.markercluster");
+var L = require("leaflet");
+var markerCluster = require("leaflet.markercluster");
 
 var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, BikeDockSvc) {
 
@@ -9,12 +10,13 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, Bik
     console.log("refreshing data from db");
     BikeDockSvc.fetch()
     .then(function(bikeDockData) {
-      $scope.bikeDockData = bikeDockData.data;
-      $scope.createMarkers(bikeDockData.data);
+      // $scope.bikeDockData = bikeDockData.data;w
+      $scope.markers = createMarkers(bikeDockData.data);
     });
   };
 
   $scope.fetchTFLData = function() {
+    console.log("updating tfl data");
     BikeDockSvc.fetchTFLData()
     .then(function(data) {
       BikeDockSvc.writeTFLData(data);
@@ -28,26 +30,18 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, Bik
     });
   };
 
-  $scope.createMarkers = function(data) {
+  var createMarkers = function(data) {
 
-    // $scope.markers = new L.MarkerClusterGroup();
-
-    var i, len = data.length, bikePointMarkers = [];
-
-    for(i = 0; i < len; i += 1) {
-
-      var bikePointMarker = {
-        lat: data[i].lat,
-        lng: data[i].lng,
+    return data.map(function(dock) {
+      return {
+        lat: dock.lat,
+        lng: dock.lng,
         focus: false,
-        message: "There are currently " + data[i].available_bikes + " available bikes at " + data[i].name
+        message: "There are currently " + dock.available_bikes + " available bikes at " + dock.name,
+        layer: "bikeDocks"
         // title: data[i].name + ": " + data[i].available_bikes + "/" + data[x].total_docks + "free.",
       }
-
-      bikePointMarkers.push(bikePointMarker);
-    }
-
-    $scope.markers = bikePointMarkers;
+    });
   }
 
   angular.extend($scope, {
@@ -55,15 +49,32 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, Bik
       // tile options: http://openmapsurfer.uni-hd.de/tiles/roads/x={x}&y={y}&z={z}
       //               http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}
       tileLayer: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+      maxZoom: 25,
       iconSize: [1, 1],
+    },
+    layers: {
+      baselayers: {
+        osm: {
+          name: 'OpenStreetMap',
+          type: 'xyz',
+          url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
+        }
+      },
+      overlays: {
+        bikeDocks: {
+          name: "BikeDocks",
+          type: "markercluster",
+          visible: true
+        }
+      }
+    },
+    markers: {
+      // myMarker: angular.copy()
     },
     center: {
       lat: 51.5072,
       lng: -0.100,
       zoom: 12
-    },
-    markers: {
-      // myMarker: angular.copy(myMarker)
     },
     markerZoomAnimation: true,
     // position: {
@@ -74,7 +85,8 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, Bik
   });
 
   $scope.refresh();
-  setInterval($scope.refresh, 30000);
+  // var refreshPage = setInterval($scope.refresh, 30000);
+  // var refreshData = setInterval($scope.fetchTFLData, 58000);
 
 });
 
