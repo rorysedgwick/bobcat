@@ -10,7 +10,6 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, Bik
     console.log("refreshing data from db");
     BikeDockSvc.fetch()
     .then(function(bikeDockData) {
-      // $scope.bikeDockData = bikeDockData.data;w
       $scope.markers = createMarkers(bikeDockData.data);
     });
   };
@@ -26,18 +25,20 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, Bik
   $scope.writeTFLData = function(data) {
     BikeDockSvc.writeTFLData(data)
     .then(function() {
-      console.log("database updated in mapCtrlr");
     });
   };
 
   var createMarkers = function(data) {
 
     return data.map(function(dock) {
+      var pluralOrSingle = dock.available_bikes === 1
+        ? "There is currently " + dock.available_bikes + " available bike at " + dock.name
+        : "There are currently " + dock.available_bikes + " available bikes at " + dock.name;
       return {
         lat: dock.lat,
         lng: dock.lng,
         focus: false,
-        message: "There are currently " + dock.available_bikes + " available bikes at " + dock.name,
+        message: pluralOrSingle,
         layer: "bikeDocks"
         // title: data[i].name + ": " + data[i].available_bikes + "/" + data[x].total_docks + "free.",
       }
@@ -64,12 +65,14 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, Bik
         bikeDocks: {
           name: "BikeDocks",
           type: "markercluster",
-          visible: true
+          visible: true,
+          layerOptions : {
+            disableClusteringAtZoom: 14,
+            spiderLegPolylineOptions: { weight: 5.75, color: "#2981CA", opacity: 0.5},
+            maxClusterRadius: 60
+          }
         }
       }
-    },
-    markers: {
-      // myMarker: angular.copy()
     },
     center: {
       lat: 51.5072,
@@ -77,16 +80,12 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, Bik
       zoom: 12
     },
     markerZoomAnimation: true,
-    // position: {
-    //   lat: 51,
-    //   lng: 0
-    // },
     events: {}
   });
 
   $scope.refresh();
-  // var refreshPage = setInterval($scope.refresh, 30000);
-  // var refreshData = setInterval($scope.fetchTFLData, 58000);
+  var refreshPage = setInterval($scope.refresh, 30000);
+  var refreshData = setInterval($scope.fetchTFLData, 58000);
 
 });
 

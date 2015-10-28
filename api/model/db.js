@@ -4,20 +4,18 @@ var mongoose = require("mongoose");
 var uriUtil = require('mongodb-uri');
 var config = require("../config.js");
 
-var testMongodbUri = "mongodb://bobcat_test:testcat@ds047124.mongolab.com:47124/test_bobcat"
-var mongodbUri = "mongodb://" + config.db.user + ":" + config.db.password + "@ds041484.mongolab.com:41484/bobcat";
-
 var mongooseUri;
 
 if (process.env.NODE_ENV === "test") {
-  mongooseUri = uriUtil.formatMongoose(testMongodbUri);
+  mongooseUri = uriUtil.formatMongoose(config.test_db.url);
 } else {
-  mongooseUri = uriUtil.formatMongoose(mongodbUri);
+  mongooseUri = uriUtil.formatMongoose(config.db.url);
 }
 
 mongoose.connect(mongooseUri);
 
 var db = mongoose.connection;
+
 
 db.once("open", function() {
   console.log("database connected");
