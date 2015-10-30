@@ -38124,7 +38124,7 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function ($scope, Bi
   var createMarkers = function createMarkers(data) {
 
     return data.map(function (dock) {
-      var pluralOrSingle = dock.available_bikes === 1 ? "There is 1 bike available at " + dock.name : "There are  " + dock.available_bikes + " available bikes at " + dock.name;
+      var pluralOrSingle = dock.available_bikes === 1 ? "There is 1 bike available at " + dock.name : "There are  " + dock.available_bikes + " bikes available at " + dock.name;
 
       return {
         lat: dock.lat,
@@ -38143,8 +38143,7 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function ($scope, Bi
       // tile options: http://openmapsurfer.uni-hd.de/tiles/roads/x={x}&y={y}&z={z}
       //               http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}
       tileLayer: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
-      maxZoom: 25,
-      iconSize: [1, 1]
+      maxZoom: 25
     },
     layers: {
       baselayers: {
