@@ -38120,16 +38120,30 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function ($scope, Bi
     BikeDockSvc.writeTFLData(data).then(function () {});
   };
 
+  $scope.pickMarker = function (dock) {
+    var availableBikes = dock.available_bikes / dock.total_docks * 100;
+
+    if (availableBikes === 0) {
+      return $scope.redIcon;
+    } else if (availableBikes > 33) {
+      return $scope.greenIcon;
+    } else if (availableBikes < 33) {
+      return $scope.orangeIcon;
+    }
+  };
+
   var createMarkers = function createMarkers(data) {
 
     return data.map(function (dock) {
       var pluralOrSingle = dock.available_bikes === 1 ? "There is currently " + dock.available_bikes + " available bike at " + dock.name : "There are currently " + dock.available_bikes + " available bikes at " + dock.name;
+
       return {
         lat: dock.lat,
         lng: dock.lng,
         focus: false,
         message: pluralOrSingle,
-        layer: "bikeDocks"
+        layer: "bikeDocks",
+        icon: $scope.pickMarker(dock)
         // title: data[i].name + ": " + data[i].available_bikes + "/" + data[x].total_docks + "free.",
       };
     });
@@ -38163,6 +38177,19 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function ($scope, Bi
           }
         }
       }
+    },
+    redIcon: {
+      iconUrl: "assets/img/icons/redIcon.png",
+      iconSize: [25, 25]
+    },
+    orangeIcon: {
+      iconUrl: "assets/img/icons/orangeIcon.png",
+      iconSize: [25, 25]
+    },
+    greenIcon: {
+      iconUrl: "assets/img/icons/greenIcon.png",
+      iconSize: [25, 25],
+      iconAnchor: [12, 0]
     },
     center: {
       lat: 51.5072,
