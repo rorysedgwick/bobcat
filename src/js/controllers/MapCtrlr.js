@@ -49,7 +49,7 @@ const mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, B
     defaults: {
       // tile options: http://openmapsurfer.uni-hd.de/tiles/roads/x={x}&y={y}&z={z}
       //               http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}
-      tileLayer: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+      // tileLayer: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
       maxZoom: 25,
     },
     layers: {
@@ -57,7 +57,7 @@ const mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, B
         osm: {
           name: 'OpenStreetMap',
           type: 'xyz',
-          url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
+          url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
         }
       },
       overlays: {
