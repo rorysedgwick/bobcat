@@ -11,7 +11,8 @@ var bikeDockSchema = new mongoose.Schema({
   lng: Number,
   available_bikes: Number,
   available_docks: Number,
-  total_docks: Number
+  total_docks: Number,
+  lastUpdated: Number
 });
 
 var Todo = mongoose.model("Todo", todoSchema);

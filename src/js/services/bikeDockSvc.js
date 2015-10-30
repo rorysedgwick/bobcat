@@ -1,19 +1,21 @@
 "use strict";
 
-var angular = require("angular");
+const angular = require("angular");
 
-var bikeDockSvc = angular.module("app").service("BikeDockSvc", function($http) {
-  this.fetch = function() {
-    return $http.get("/api/bikeDockData");
-  };
+const bikeDockSvc = angular.module("app").service("BikeDockSvc", function($http) {
 
-  this.fetchTFLData = function() {
-    return $http.get("https://tfl.gov.uk/tfl/syndication/feeds/cycle-hire/livecyclehireupdates.xml");
-  };
+  this.fetch = () => $http.get("/api/bikeDockData");
 
-  this.writeTFLData = function(data) {
-    return $http.post("/api/bikeDockData", data);
-  };
+  // io = io.connect();
+  // io.emit("ready");
+
+  // io.on("new client", function() {
+  //   console.log("new visitor connected to server");
+  // });
+
+  // io.on("dataUpdate", function() {
+  //   this.fetch();
+  // });
 
 });
 

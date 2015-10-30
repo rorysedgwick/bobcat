@@ -21,11 +21,13 @@
     "browserify": "^11.2.0",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
+    "express.io": "^1.1.13",
     "leaflet": "^0.7.5",
     "leaflet.markercluster": "^0.4.0",
     "mongodb": "^2.0.46",
     "mongodb-uri": "^0.9.7",
     "mongoose": "^4.1.12",
+    "request": "^2.65.0",
     "watchify": "^3.4.0",
     "xml2js": "^0.4.13"
   },

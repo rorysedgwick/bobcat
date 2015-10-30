@@ -38109,33 +38109,22 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function ($scope, Bi
     });
   };
 
-  $scope.fetchTFLData = function () {
-    console.log("updating tfl data");
-    BikeDockSvc.fetchTFLData().then(function (data) {
-      BikeDockSvc.writeTFLData(data);
-    });
-  };
-
-  $scope.writeTFLData = function (data) {
-    BikeDockSvc.writeTFLData(data).then(function () {});
-  };
-
   $scope.pickMarker = function (dock) {
     var availableBikes = dock.available_bikes / dock.total_docks * 100;
 
     if (availableBikes === 0) {
       return $scope.redIcon;
-    } else if (availableBikes > 33) {
-      return $scope.greenIcon;
     } else if (availableBikes < 33) {
       return $scope.orangeIcon;
+    } else if (availableBikes > 33) {
+      return $scope.greenIcon;
     }
   };
 
   var createMarkers = function createMarkers(data) {
 
     return data.map(function (dock) {
-      var pluralOrSingle = dock.available_bikes === 1 ? "There is currently " + dock.available_bikes + " available bike at " + dock.name : "There are currently " + dock.available_bikes + " available bikes at " + dock.name;
+      var pluralOrSingle = dock.available_bikes === 1 ? "There is 1 bike available at " + dock.name : "There are  " + dock.available_bikes + " available bikes at " + dock.name;
 
       return {
         lat: dock.lat,
@@ -38171,7 +38160,7 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function ($scope, Bi
           type: "markercluster",
           visible: true,
           layerOptions: {
-            disableClusteringAtZoom: 14,
+            disableClusteringAtZoom: 13,
             spiderLegPolylineOptions: { weight: 5.75, color: "#2981CA", opacity: 0.5 },
             maxClusterRadius: 60
           }
@@ -38180,11 +38169,13 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function ($scope, Bi
     },
     redIcon: {
       iconUrl: "assets/img/icons/redIcon.png",
-      iconSize: [25, 25]
+      iconSize: [25, 25],
+      iconAnchor: [12, 0]
     },
     orangeIcon: {
       iconUrl: "assets/img/icons/orangeIcon.png",
-      iconSize: [25, 25]
+      iconSize: [25, 25],
+      iconAnchor: [12, 0]
     },
     greenIcon: {
       iconUrl: "assets/img/icons/greenIcon.png",
@@ -38201,8 +38192,7 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function ($scope, Bi
   });
 
   $scope.refresh();
-  var refreshPage = setInterval($scope.refresh, 30000);
-  var refreshData = setInterval($scope.fetchTFLData, 58000);
+  var refreshPage = setInterval($scope.refresh, 19000);
 });
 
 module.exports = mapCtrlr;
@@ -38213,17 +38203,21 @@ module.exports = mapCtrlr;
 var angular = require("angular");
 
 var bikeDockSvc = angular.module("app").service("BikeDockSvc", function ($http) {
+
   this.fetch = function () {
     return $http.get("/api/bikeDockData");
   };
 
-  this.fetchTFLData = function () {
-    return $http.get("https://tfl.gov.uk/tfl/syndication/feeds/cycle-hire/livecyclehireupdates.xml");
-  };
+  // io = io.connect();
+  // io.emit("ready");
 
-  this.writeTFLData = function (data) {
-    return $http.post("/api/bikeDockData", data);
-  };
+  // io.on("new client", function() {
+  //   console.log("new visitor connected to server");
+  // });
+
+  // io.on("dataUpdate", function() {
+  //   this.fetch();
+  // });
 });
 
 module.exports = bikeDockSvc;

@@ -17,8 +17,16 @@
 
       <section class="legend">
         <div class="icon docking-station">
-          <img class="legend-icon" src="/assets/img/legend/dock.png">
-          <span class="vertical-container"><p class="legend-description"> bike docking station</p></span>
+          <img class="legend-icon" src="/assets/img/icons/greenIcon.png">
+          <span class="vertical-container"><p class="legend-description"> bikes available</p></span>
+        </div>
+        <div class="icon docking-station">
+          <img class="legend-icon" src="/assets/img/icons/orangeIcon.png">
+          <span class="vertical-container"><p class="legend-description"> few bikes available</p></span>
+        </div>
+        <div class="icon docking-station">
+          <img class="legend-icon" src="/assets/img/icons/redIcon.png">
+          <span class="vertical-container"><p class="legend-description"> no bikes available</p></span>
         </div>
         <div class="icon cluster">
           <img class="legend-icon" src="/assets/img/legend/cluster.png">
@@ -28,6 +36,7 @@
 
     </div>
 
+    <script src="/socket.io/socket.io.js"></script>
     <script src="/js/leaflet.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/angular-simple-logger.js"></script>
