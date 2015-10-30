@@ -7,7 +7,6 @@ const markerCluster = require("leaflet.markercluster");
 const mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, BikeDockSvc) {
 
   $scope.refresh = () => {
-    console.log("refreshing data from db");
     BikeDockSvc.fetch()
     .then(function(bikeDockData) {
       $scope.markers = createMarkers(bikeDockData.data);
