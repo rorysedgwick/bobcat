@@ -20,6 +20,7 @@
     "body-parser": "^1.14.1",
     "browserify": "^11.2.0",
     "coffee-script": "^1.10.0",
+    "connect": "^3.4.0",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
     "express.io": "^1.1.13",
