@@ -9,7 +9,7 @@
     "test": "mocha test/**/**",
     "watch-test": "mocha -w test/**/*.js",
     "lint": "eslint **/*.js",
-    "start": "npm run build-watch & nodemon api/server.js",
+    "start": "npm run build-watch & node api/server.js",
     "build": "npm run lint & npm run browserify",
     "build-watch": "watchify src/js/app.js -t babelify -o public/js/app.js",
     "browserify": "browserify src/js/app.js -t babelify -o public/js/app.js"

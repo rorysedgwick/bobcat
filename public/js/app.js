@@ -38092,8 +38092,9 @@ angular.module("app", ["nemLogging", "leaflet-directive"]);
 
 require("./services/bikeDockSvc.js");
 require("./controllers/mapCtrlr.js");
+require("./directives/lastUpdateDirective");
 
-},{"./controllers/mapCtrlr.js":6,"./services/bikeDockSvc.js":7,"angular":2}],6:[function(require,module,exports){
+},{"./controllers/mapCtrlr.js":6,"./directives/lastUpdateDirective":7,"./services/bikeDockSvc.js":8,"angular":2}],6:[function(require,module,exports){
 "use strict";
 
 var angular = require("angular");
@@ -38103,8 +38104,8 @@ var markerCluster = require("leaflet.markercluster");
 var mapCtrlr = angular.module("app").controller("MapCtrlr", function ($scope, BikeDockSvc) {
 
   $scope.refresh = function () {
-    console.log("refreshing data from db");
     BikeDockSvc.fetch().then(function (bikeDockData) {
+      $scope.lastUpdate = bikeDockData.data[0].lastUpdated;
       $scope.markers = createMarkers(bikeDockData.data);
     });
   };
@@ -38169,7 +38170,7 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function ($scope, Bi
     redIcon: {
       iconUrl: "assets/img/icons/redIcon.png",
       iconSize: [25, 25],
-      iconAnchor: [12, 0]
+      iconAnchor: [0, 12]
     },
     orangeIcon: {
       iconUrl: "assets/img/icons/orangeIcon.png",
@@ -38179,7 +38180,7 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function ($scope, Bi
     greenIcon: {
       iconUrl: "assets/img/icons/greenIcon.png",
       iconSize: [25, 25],
-      iconAnchor: [12, 0]
+      iconAnchor: [0, 0]
     },
     center: {
       lat: 51.5072,
@@ -38191,12 +38192,25 @@ var mapCtrlr = angular.module("app").controller("MapCtrlr", function ($scope, Bi
   });
 
   $scope.refresh();
-  var refreshPage = setInterval($scope.refresh, 19000);
+  var refreshPage = setInterval($scope.refresh, 25000);
 });
 
 module.exports = mapCtrlr;
 
 },{"angular":2,"leaflet":4,"leaflet.markercluster":3}],7:[function(require,module,exports){
+"use strict";
+
+var angular = require("angular");
+
+var lastUpdateDirective = angular.module("app").directive("lastUpdateDirective", function () {
+  return {
+    template: "Data last updated at {{ lastUpdate }}"
+  };
+});
+
+module.exports = lastUpdateDirective;
+
+},{"angular":2}],8:[function(require,module,exports){
 "use strict";
 
 var angular = require("angular");
