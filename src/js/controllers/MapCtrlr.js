@@ -7,9 +7,9 @@ const markerCluster = require("leaflet.markercluster");
 const mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, BikeDockSvc) {
 
   $scope.refresh = () => {
-    console.log("refreshing data from db");
     BikeDockSvc.fetch()
     .then(function(bikeDockData) {
+      $scope.lastUpdate = bikeDockData.data[0].lastUpdated;
       $scope.markers = createMarkers(bikeDockData.data);
     });
   };
@@ -49,7 +49,7 @@ const mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, B
     defaults: {
       // tile options: http://openmapsurfer.uni-hd.de/tiles/roads/x={x}&y={y}&z={z}
       //               http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}
-      tileLayer: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+      // tileLayer: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
       maxZoom: 25,
     },
     layers: {
@@ -57,7 +57,7 @@ const mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, B
         osm: {
           name: 'OpenStreetMap',
           type: 'xyz',
-          url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
+          url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
         }
       },
       overlays: {
@@ -76,7 +76,7 @@ const mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, B
     redIcon: {
       iconUrl: "assets/img/icons/redIcon.png",
       iconSize: [25, 25],
-      iconAnchor: [12, 0]
+      iconAnchor: [0, 12]
     },
     orangeIcon: {
       iconUrl: "assets/img/icons/orangeIcon.png",
@@ -86,7 +86,7 @@ const mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, B
     greenIcon: {
       iconUrl: "assets/img/icons/greenIcon.png",
       iconSize: [25, 25],
-      iconAnchor: [12, 0]
+      iconAnchor: [0, 0]
     },
     center: {
       lat: 51.5072,
@@ -98,7 +98,7 @@ const mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, B
   });
 
   $scope.refresh();
-  var refreshPage = setInterval($scope.refresh, 19000);
+  var refreshPage = setInterval($scope.refresh, 25000);
 
 });
 
