@@ -4,11 +4,11 @@ const angular = require("angular");
 const L = require("leaflet");
 const markerCluster = require("leaflet.markercluster");
 
-const mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, BikeDockSvc) {
+const mapCtrlr = angular.module("app").controller("MapCtrlr", ($scope, BikeDockSvc) => {
 
   $scope.refresh = () => {
     BikeDockSvc.fetch()
-    .then(function(bikeDockData) {
+    .then(bikeDockData => {
       $scope.lastUpdate = bikeDockData.data[0].lastUpdated;
       $scope.markers = createMarkers(bikeDockData.data);
     });
@@ -28,7 +28,7 @@ const mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, B
 
   var createMarkers = (data) => {
 
-    return data.map(function(dock) {
+    return data.map(dock => {
       var pluralOrSingle = dock.available_bikes === 1
         ? `There is 1 bike available at ${dock.name}`
         : `There are  ${dock.available_bikes} bikes available at ${dock.name}`;
@@ -40,16 +40,12 @@ const mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, B
         message: pluralOrSingle,
         layer: "bikeDocks",
         icon: $scope.pickMarker(dock)
-        // title: data[i].name + ": " + data[i].available_bikes + "/" + data[x].total_docks + "free.",
       }
     });
   }
 
   angular.extend($scope, {
     defaults: {
-      // tile options: http://openmapsurfer.uni-hd.de/tiles/roads/x={x}&y={y}&z={z}
-      //               http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}
-      // tileLayer: "http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
       maxZoom: 25,
     },
     layers: {
@@ -68,7 +64,7 @@ const mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, B
           layerOptions : {
             disableClusteringAtZoom: 13,
             spiderLegPolylineOptions: { weight: 5.75, color: "#2981CA", opacity: 0.5},
-            maxClusterRadius: 60
+            maxClusterRadius: 85
           }
         }
       }
@@ -76,17 +72,17 @@ const mapCtrlr = angular.module("app").controller("MapCtrlr", function($scope, B
     redIcon: {
       iconUrl: "assets/img/icons/redIcon.png",
       iconSize: [25, 25],
-      iconAnchor: [0, 12]
+      iconAnchor: [12, 25]
     },
     orangeIcon: {
       iconUrl: "assets/img/icons/orangeIcon.png",
       iconSize: [25, 25],
-      iconAnchor: [12, 0]
+      iconAnchor: [12, 25]
     },
     greenIcon: {
       iconUrl: "assets/img/icons/greenIcon.png",
       iconSize: [25, 25],
-      iconAnchor: [0, 0]
+      iconAnchor: [12, 25]
     },
     center: {
       lat: 51.5072,

@@ -1,0 +1,12 @@
+{
+  "db": {
+    "url": "mongodb://<username>:<password>@ds<db-number>.mongolab.com:<db-number>/<db-name>",
+    "user": "<username>",
+    "password": "<password>"
+  },
+  "testdb": {
+    "url": "mongodb://<test_username>:<test_password>@ds<test_db-number>.mongolab.com:<test_db-number>/<test_db-name>",
+    "user": "<test_username>",
+    "password": "<test_password>"
+  }
+}

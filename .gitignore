@@ -26,6 +26,8 @@ node_modules
 
 .DS_Store
 
+/public/js/app.js
+
 creds.json
 credentials.json
 
